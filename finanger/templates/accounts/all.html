@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Accounts{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <a href="{{ url_for('accounts.add') }}">Add Account</a>
+        <ul>
+            {% for account in accounts %}
+                <li>
+                    {{ account.name }} - R${{ account.amount }}
+                    <a href="{{ url_for('accounts.update', id=account['id']) }}">Edit</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
