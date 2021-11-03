@@ -10,7 +10,7 @@
         <input name="name" id="name" 
             value="{{ request.form['name'] or account['name'] }}" required>
         <label for="amount">Amount</label>
-        <input name="amount" id="amount" type="number"
+        <input name="amount" id="amount" type="number" step="0.01"
             value="{{ request.form['amount'] or account['amount'] }}" required>
         <input type="submit" value="Save">
     </form>

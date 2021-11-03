@@ -8,7 +8,7 @@
     <h3>Balance: R${{ balance }}</h3>
 
     <div>
-        <h4>Accounts  <a href="{{ url_for('accounts.all') }}">Manage Accounts</a></h4>
+        <h4>Accounts  <a href="{{ url_for('accounts.main') }}">Manage Accounts</a></h4>
         <ul>
             {% for account in accounts %}
                 <li>{{ account.name }} - R${{ account.amount }}</li>
