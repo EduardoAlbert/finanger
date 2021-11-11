@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}{{ type }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    {% if type == 'Incomes' %}
+        <a href="{{ url_for('transactions.add', type='incomes') }}">New income</a>
+    {% elif type == 'Expenses' %}
+        <a href="{{ url_for('transactions.add', type='expenses') }}">New expense</a>
+    {% endif %}
+    <ul>
+        {% for transaction in transactions %}
+            <li>
+                {{ transaction.description }} - R${{ transaction.amount }} - {{ transaction.account }} - {{ transaction.date }}
+                <a href="{{ url_for('transactions.update', id=transaction['id']) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Edit {{ type }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="description">Description</label>
+        <input name="description" id="description"
+            value="{{ request.form['description'] or transaction['description'] }}" required>
+        <label for="amount">Amount</label>
+        <input name="amount" id="amount" type="number" step="0.01" 
+            value="{{ request.form['amount'] or transaction['amount'] }}" required>
+        <label for="date">Date</label>
+        <input name="date" id="date" type="date" 
+            value="{{ request.form['date'] or transaction['date'] }}" required>
+        <label for="account_id">Account</label>
+        <select name="account_id" required>
+            <option selected value="{{ account['id'] }}">{{ account.name }}</option>
+        </select>
+        <input type="submit" value="Save">
+    </form>
+    <form action="{{ url_for('transactions.delete', id=transaction['id']) }}" method="post">
+        <input type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+{% endblock %}

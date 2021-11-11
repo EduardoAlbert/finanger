@@ -8,6 +8,11 @@
     <h3>Balance: R${{ balance }}</h3>
 
     <div>
+        <h4><a href="{{ url_for('transactions.main', type='incomes') }}">Incomes</a> - R${{ income_total }}</h4>
+        <h4><a href="{{ url_for('transactions.main', type='expenses') }}">Expenses</a> - R${{ expense_total }}</h4>
+    </div>
+
+    <div>
         <h4>Accounts  <a href="{{ url_for('accounts.main') }}">Manage Accounts</a></h4>
         <ul>
             {% for account in accounts %}

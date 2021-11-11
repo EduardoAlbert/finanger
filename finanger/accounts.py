@@ -1,18 +1,41 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
+from werkzeug.exceptions import abort
 
 from finanger.auth import login_required
 from finanger.db import get_db
-from finanger.dashboard import get_accounts
 
 bp = Blueprint('accounts', __name__, url_prefix='/accounts')
+
+
+def get_account(get_all=True, id=None, check_owner=False):
+
+    if get_all:
+        accounts = get_db().execute(
+            'SELECT id, name, amount FROM account WHERE user_id = ?', (g.user['id'],)
+        ).fetchall()
+        
+        return accounts
+
+    if check_owner:
+        account = get_db().execute(
+            'SELECT id, name, amount, user_id FROM account WHERE id = ?', (id,)
+        ).fetchone()
+
+        if account is None:
+            abort(404, f"Account id {id} doesn't exist.")
+
+        if account['user_id'] != g.user['id']:
+            abort(403)
+        
+        return account
 
 
 @bp.route('/')
 @login_required
 def main():
-    accounts = get_accounts()
+    accounts = get_account()
     return render_template('accounts/main.html', accounts=accounts)
 
 
@@ -47,7 +70,7 @@ def add():
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    account = get_accounts(get_all=False, id=id, check_owner=True)
+    account = get_account(get_all=False, id=id, check_owner=True)
 
     if request.method == 'POST':
         name = request.form['name']
@@ -75,7 +98,7 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_accounts(get_all=False, id=id, check_owner=True)
+    get_account(get_all=False, id=id, check_owner=True)
     db = get_db()
     db.execute('DELETE FROM account WHERE id = ?', (id,))
     db.commit()

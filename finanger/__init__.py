@@ -35,4 +35,7 @@ def create_app():
     from . import accounts
     app.register_blueprint(accounts.bp)
 
+    from . import transactions
+    app.register_blueprint(transactions.bp)
+
     return app
