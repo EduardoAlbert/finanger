@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}New {{ type }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="description">Description</label>
+        <input name="description" id="description" required>
+        <label for="amount">Amount</label>
+        <input name="amount" id="amount" type="number" step="0.01" required>
+        <label for="date">Date</label>
+        <input name="date" id="date" type="date" required>
+        <label for="account_id_origin">From</label>
+        <select name="account_id_origin" required>
+            {% for account in accounts %}
+                <option value="{{ account.id }}">{{account.name}}</option>
+            {% endfor %}
+        </select>
+        <label for="account_id_destination">to</label>
+        <select name="account_id_destination" required>
+            {% for account in accounts %}
+                <option value="{{ account.id }}">{{account.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}

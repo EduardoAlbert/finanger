@@ -8,6 +8,10 @@
 
 <nav>
   <h1>Finanger</h1>
+  <a href="{{ url_for('accounts.main') }}">Accounts</a>
+  <a href="{{ url_for('transactions.main', type='incomes') }}">Incomes</a>
+  <a href="{{ url_for('transactions.main', type='expenses') }}">Expenses</a>
+  <a href="{{ url_for('transferences.main') }}">Transferences</a>
   <ul>
     {% if g.user %}
       <li><span>{{ g.user['username'] }}</span>

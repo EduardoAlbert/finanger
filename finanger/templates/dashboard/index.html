@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <h3>Balance: R${{ balance }}</h3>
+    <h3>Balance: {{ balance }}</h3>
 
     <div>
         <h4><a href="{{ url_for('transactions.main', type='incomes') }}">Incomes</a> - R${{ income_total }}</h4>

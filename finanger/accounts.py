@@ -9,7 +9,7 @@ from finanger.db import get_db
 bp = Blueprint('accounts', __name__, url_prefix='/accounts')
 
 
-def get_account(get_all=True, id=None, check_owner=False):
+def get_account(get_all=False, id=None, check_owner=False):
 
     if get_all:
         accounts = get_db().execute(
@@ -35,7 +35,7 @@ def get_account(get_all=True, id=None, check_owner=False):
 @bp.route('/')
 @login_required
 def main():
-    accounts = get_account()
+    accounts = get_account(get_all=True)
     return render_template('accounts/main.html', accounts=accounts)
 
 
@@ -70,7 +70,7 @@ def add():
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    account = get_account(get_all=False, id=id, check_owner=True)
+    account = get_account(id=id, check_owner=True)
 
     if request.method == 'POST':
         name = request.form['name']
@@ -98,7 +98,7 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_account(get_all=False, id=id, check_owner=True)
+    get_account(id=id, check_owner=True)
     db = get_db()
     db.execute('DELETE FROM account WHERE id = ?', (id,))
     db.commit()

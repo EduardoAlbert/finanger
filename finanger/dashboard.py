@@ -27,9 +27,10 @@ def index():
         'WHERE t.type_id = 2 AND a.user_id = ?', (g.user['id'],)
     ).fetchone()[0]
     
-    accounts = get_account()
+    accounts = get_account(get_all=True)
     balance = 0.0
     for account in accounts:
         balance += account['amount']
     balance = f"{balance:.2f}"
+
     return render_template('dashboard/index.html', accounts=accounts, balance=balance, income_total=income_total, expense_total=expense_total)

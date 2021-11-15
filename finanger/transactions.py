@@ -65,18 +65,18 @@ def add(type):
     if request.method == 'POST':
 
         description = request.form['description']
-        transaction_amount = float(request.form['amount'])
+        amount = float(request.form['amount'])
         date = request.form['date']
-        account = get_account(id=request.form['account_id'], check_owner=True, get_all=False)
+        account = get_account(id=request.form['account_id'], check_owner=True)
         error = None
 
         if not description:
             error = 'Description is required.'
-        elif not transaction_amount:
+        elif not amount:
             error = 'Amount is required.'
         elif not date:
             error = 'Date is required.'
-        elif type == 'expenses' and account['amount'] < transaction_amount:
+        elif type == 'expenses' and account['amount'] < amount:
             error = 'Insufficient cash.'
 
         if error is None:
@@ -90,12 +90,13 @@ def add(type):
             db.execute(
                 'UPDATE account '
                f'SET amount = amount {operator} ? '
-                'WHERE id = ?', (transaction_amount, account['id'])
+                'WHERE id = ?', (amount, account['id'])
             )
             db.commit()
+            
             db.execute(
                 'INSERT INTO transactions (description, amount, date, type_id, account_id) '
-                'VALUES (?, ?, ?, ?, ?)', (description, transaction_amount, date, type_id, account['id'])
+                'VALUES (?, ?, ?, ?, ?)', (description, amount, date, type_id, account['id'])
             )
             db.commit()
 
@@ -114,29 +115,29 @@ def add(type):
 def update(id):
     """Update incomes and expenses"""
     transaction = get_transaction(id=id, check_user=True)
-    account = get_account(id=transaction['account_id'], check_owner=True, get_all=False)
+    account = get_account(id=transaction['account_id'], check_owner=True)
 
     if request.method == 'POST':
         
         new_description = request.form['description']
-        new_transaction_amount = float(request.form['amount'])
+        new_amount = float(request.form['amount'])
         new_date = str(request.form['date'])
         error = None
 
         if not new_description:
             error = 'Description is required.'
-        elif not new_transaction_amount:
+        elif not new_amount:
             error = 'Amount is required.'
         elif not new_date:
             error = 'Date is required.'
-        elif transaction['type'] == 'expenses' and new_transaction_amount > account['amount']:
+        elif transaction['type'] == 'expenses' and new_amount > account['amount']:
             error = 'Insufficient Cash.'
 
         if error is None:
             operator = '+'
             if transaction['type'] == 'expenses':
                 operator = '-'
-            difference = new_transaction_amount - transaction['amount']
+            difference = new_amount - transaction['amount']
 
             db = get_db()
             db.execute(
@@ -150,7 +151,7 @@ def update(id):
                 'SET description = ?, '
                 '    amount = ?, '
                 '    date = ? '
-                'WHERE id = ?', (new_description, new_transaction_amount, new_date, id)
+                'WHERE id = ?', (new_description, new_amount, new_date, id)
             )
             db.commit()
 

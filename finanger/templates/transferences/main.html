@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Transferences{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    <a href="{{ url_for('transferences.add') }}">New transference</a>
+    <ul>
+        {% for transference in transferences %}
+            <li>
+                {{ transference.description }} - R${{ transference.amount }} - {{ transference.account_origin }} -> {{ transference.account_destination }}  - {{ transference.date }}
+                <form action="{{ url_for('transferences.delete', id=transference['id']) }}" method="post">
+                    <input type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
