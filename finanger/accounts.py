@@ -60,9 +60,12 @@ def add():
                 (name, amount, g.user['id'])
             )
             db.commit()
+
+            flash("Account added successfully!", "success")
+
             return redirect(url_for('accounts.main'))
 
-        flash(error)
+        flash(error, "danger")
 
     return render_template('accounts/add.html')
 
@@ -90,7 +93,12 @@ def update(id):
                 (name, amount, id)
             )
             db.commit()
+
+            flash("Account updated successfully!", "success")
+
             return redirect(url_for('accounts.main'))
+        
+        flash(error, "danger")
 
     return render_template('accounts/update.html', account=account)
 
@@ -102,4 +110,5 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM account WHERE id = ?', (id,))
     db.commit()
+    flash("Account deleted successfully!", "success")
     return redirect(url_for('accounts.main'))

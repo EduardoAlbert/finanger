@@ -1,21 +1,32 @@
 {% extends 'base.html' %}
 
+{% block title %}- Edit Account{% endblock %}
+
 {% block header %}
-    <h1>{% block title %}Edit Account{% endblock %}</h1>
+<header class="form-header">
+    <h3>Edit Account</h3>
+    <form class="header-form" action="{{ url_for('accounts.delete', id=account['id']) }}" method="post">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</button>
+    </form>
+</header>
+
 {% endblock %}
 
 {% block content %}
     <form method="post">
-        <label for="name">Name</label>
-        <input name="name" id="name" 
-            value="{{ request.form['name'] or account['name'] }}" required>
-        <label for="amount">Amount</label>
-        <input name="amount" id="amount" type="number" step="0.01"
-            value="{{ request.form['amount'] or account['amount'] }}" required>
-        <input type="submit" value="Save">
-    </form>
-
-    <form action="{{ url_for('accounts.delete', id=account['id']) }}" method="post">
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure');">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input name="name" id="name" class="form-control" autofocus autocomplete="off"
+                value="{{ request.form['name'] or account['name'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input name="amount" id="amount" type="number" step="0.01" class="form-control"
+                value="{{ request.form['amount'] or account['amount'] }}" required>
+        </div>
+        <div class="submit-group">
+            <button type="submit" class="btn btn-outline-success mb-3">Save</button>
+            <a href="{{ url_for('accounts.main') }}" class="btn btn-outline-danger mb-3">Cancel</a>
+        </div>
     </form>
 {% endblock %}

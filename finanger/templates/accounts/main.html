@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 
+{% block title %}- Accounts{% endblock %}
+
 {% block header %}
-    <h1>{% block title %}Accounts{% endblock %}</h1>
+<header>
+    <h3>Accounts</h3>
+    <a type="button" class="btn btn-outline-primary" href="{{ url_for('accounts.add') }}">Add account</a>
+</header>
 {% endblock %}
 
+
 {% block content %}
-    <div>
-        <a href="{{ url_for('accounts.add') }}">Add Account</a>
-        <ul>
-            {% for account in accounts %}
-                <li>
-                    {{ account.name }} - R${{ account.amount }}
-                    <a href="{{ url_for('accounts.update', id=account['id']) }}">Edit</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    <ul class="list-group">
+        {% for account in accounts %}
+            <li class="list-group-item">{{ account.name }}<span class="span-right">{{ account.amount | brl }}</span>
+                <a type="button" class="btn btn-outline-warning" href="{{ url_for('accounts.update', id=account['id']) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

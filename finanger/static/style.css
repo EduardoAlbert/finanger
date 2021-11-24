@@ -1,0 +1,150 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: xx-large;
+}
+
+.content { 
+    margin: auto; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    max-width: 760px; 
+    display: flex;
+    flex-direction: column;
+}
+
+.content { 
+    padding: 0 1rem 1rem; 
+}
+
+header { 
+    border-bottom: 1px solid lightgray; 
+    display: flex; 
+    align-items: center; 
+}
+
+header h3 { 
+    flex: auto; 
+    margin: 1rem 0 0.25rem 0;
+}
+
+header a { 
+    margin-left: auto; 
+}
+
+.form-header {
+    margin: auto;
+    border-bottom: 0px;
+}
+
+.header-form {
+    margin-left: 70px;
+}
+
+.table-header {
+    border-bottom: 0px;
+}
+
+.balance {
+    flex-direction: column;
+}
+
+.balance h1 {
+    font-size: 48pt;
+    margin-top: -10px;
+}
+
+.balance a {
+    text-decoration: none;
+    color: black;
+}
+
+.dash-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.content .list-group .dash-incomes {
+    width: 280px;
+    background-color: rgb(190, 255, 170);
+}
+
+.content .list-group .dash-expenses {
+    width: 280px;
+    background-color: rgb(255, 190, 170);
+}
+
+.content .list-group #dash-accounts {
+    width: 560px;
+}
+
+.content .list-group-item > span {
+    margin-left: auto;
+}
+
+#dash-last-expenses {
+    margin: auto;
+    width: 560px;
+}
+
+.content > ul { 
+    margin-top: 20px; 
+}
+
+.content > ul > li { 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.content > ul > li > a {
+    margin-left: auto;
+}
+
+.content .span-right {
+    position: absolute;
+    left: 300px;
+}
+
+.content > form {
+    margin: auto;
+    margin-top: 5px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 48px;
+}
+
+.content > form > .submit-group {
+    display: flex;
+}
+
+.content > form > .submit-group a {
+    margin-left: auto;
+}
+
+.content > table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.content #t-desc {
+    font-size: large;
+    margin-left: 50px;
+}
+
+.content #t-acc {
+    position: absolute;
+    margin-right: 150px;
+    color: gray;
+}
+
+.content #t-date {
+    position: absolute;
+    margin-left: 150px;
+}
+
+.content #t-amount {
+    font-size: large;
+    margin-right: 50px;
+}

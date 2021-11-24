@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}- Transactions{% endblock %}
+
+{% block header %}
+<header>
+    <h3>Transactions</h3>
+</header>
+{% endblock %}
+
+{% block content %}
+<ul class="list-group">
+    {% for transaction in transactions %}
+        <li class="list-group-item" id="t-all-lg">
+            <span id="t-desc" >{{ transaction['description'] }}</span>
+            <span id="t-acc">{{ transaction['account'] }}</span>
+            <span id="t-date">{{ transaction['date'] }}</span>
+            {% if transaction['type'] == 'incomes' %}
+                <span id="t-amount" style="color: rgb(25, 216, 25);">+{{ transaction['amount'] | brl }} </span>
+            {% else %}
+            <span id="t-amount" style="color: rgb(255, 103, 103);">-{{ transaction['amount'] | brl }} </span>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

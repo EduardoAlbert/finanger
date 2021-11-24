@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
+from flask.helpers import get_flashed_messages
 from werkzeug.exceptions import abort
 
 from finanger.accounts import get_account
@@ -17,7 +18,8 @@ def get_transaction(get_all=False, id=None, check_user=False, type=None):
             "SELECT t.id, t.description, t.amount, t.date, a.name AS account FROM transactions t "
             "JOIN transaction_type tt ON t.type_id = tt.id "
             "JOIN account a ON t.account_id = a.id "
-            "WHERE tt.type = ? AND a.user_id = ?", (type, g.user['id'])
+            "WHERE tt.type = ? AND a.user_id = ?"
+            "ORDER BY t.date DESC", (type, g.user['id'])
         ).fetchall()
 
         return transactions
@@ -40,6 +42,21 @@ def get_transaction(get_all=False, id=None, check_user=False, type=None):
             abort(403)
         
         return transaction
+
+
+@bp.route('/')
+@login_required
+def all():
+
+    transactions = get_db().execute(
+            "SELECT t.id, t.description, t.amount, t.date, a.name AS account, tt.type FROM transactions t "
+            "JOIN transaction_type tt ON t.type_id = tt.id "
+            "JOIN account a ON t.account_id = a.id "
+            "WHERE a.user_id = ?"
+            "ORDER BY t.date DESC", (g.user['id'],)
+        ).fetchall()
+
+    return render_template('transactions/all.html', transactions=transactions)
 
 
 @bp.route('/<string:type>')
@@ -100,9 +117,11 @@ def add(type):
             )
             db.commit()
 
+            flash("Transaction added successfully!", "success")
+            
             return redirect(url_for('transactions.main', type=type))
 
-        flash(error)
+        flash(error, "danger")
 
     accounts = get_account(get_all=True)
     type = type[:-1].capitalize()
@@ -155,9 +174,11 @@ def update(id):
             )
             db.commit()
 
+            flash("Transaction updated successfully!", "success")
+
             return redirect(url_for('transactions.main', type=transaction['type']))
 
-        flash(error)
+        flash(error, "danger")
 
     type = transaction['type'][:-1].capitalize()
 
@@ -185,5 +206,7 @@ def delete(id):
         'WHERE id = ?', (id,)
     )
     db.commit()
+
+    flash("Transaction deleted successfully!", "success")
 
     return redirect(url_for('transactions.main', type=transaction['type']))

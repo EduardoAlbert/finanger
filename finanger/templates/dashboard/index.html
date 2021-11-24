@@ -1,24 +1,44 @@
 {% extends 'base.html' %}
 
-{% block header %}
-    <h1>{% block title %}Dashboard{% endblock %}</h1>
-{% endblock %}
+{% block title %}- Dashboard{% endblock %}
 
 {% block content %}
-    <h3>Balance: {{ balance }}</h3>
 
-    <div>
-        <h4><a href="{{ url_for('transactions.main', type='incomes') }}">Incomes</a> - R${{ income_total }}</h4>
-        <h4><a href="{{ url_for('transactions.main', type='expenses') }}">Expenses</a> - R${{ expense_total }}</h4>
+    <div class="balance dash-item">
+        <h5>Balance</h5>
+        <h1><a href="{{ url_for('transactions.all') }}">{{ balance | brl }}</a></h1>
     </div>
 
-    <div>
-        <h4>Accounts  <a href="{{ url_for('accounts.main') }}">Manage Accounts</a></h4>
-        <ul>
-            {% for account in accounts %}
-                <li>{{ account.name }} - R${{ account.amount }}</li>
+    <ul class="list-group list-group-horizontal dash-item">
+        <li class="list-group-item dash-incomes">Incomes <span>{{ income_total | brl }}</span></li>
+        <li class="list-group-item dash-expenses">Expenses <span>{{ expense_total | brl }}</span></li>
+    </ul>
+
+    <ul class="list-group dash-item">
+        <h5>Accounts</h5>
+        {% for account in accounts %}
+            <li id="dash-accounts" class="list-group-item">{{ account.name }} <span>{{ account.amount | brl }}</span></li>
+        {% endfor %}
+    </ul>
+
+    <h5 class="dash-item">Last Expenses</h5>
+    <table id="dash-last-expenses" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in last_expenses %}
+                <tr>
+                    <td>{{ expense.description }}</td>
+                    <td>{{ expense.amount | brl }}</td>
+                    <td>{{ expense.date }}</td>
+                </tr>
             {% endfor %}
-        </ul>
-    </div>
+        </tbody>
+    </table>
     
 {% endblock %}

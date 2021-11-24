@@ -1,27 +1,46 @@
 {% extends 'base.html' %}
 
+{% block title %}- Edit {{ type }}{% endblock %}
+
 {% block header %}
-    <h1>{% block title %}Edit {{ type }} {% endblock %}</h1>
+<header class="form-header">
+    <h3>Edit {{ type }}</h3>
+    <form class="header-form" action="{{ url_for('transactions.delete', id=transaction['id']) }}" method="post">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete</button>
+    </form>
+</header>
 {% endblock %}
 
 {% block content %}
     <form method="post">
-        <label for="description">Description</label>
-        <input name="description" id="description"
-            value="{{ request.form['description'] or transaction['description'] }}" required>
-        <label for="amount">Amount</label>
-        <input name="amount" id="amount" type="number" step="0.01" 
-            value="{{ request.form['amount'] or transaction['amount'] }}" required>
-        <label for="date">Date</label>
-        <input name="date" id="date" type="date" 
-            value="{{ request.form['date'] or transaction['date'] }}" required>
-        <label for="account_id">Account</label>
-        <select name="account_id" required>
-            <option selected value="{{ account['id'] }}">{{ account.name }}</option>
-        </select>
-        <input type="submit" value="Save">
-    </form>
-    <form action="{{ url_for('transactions.delete', id=transaction['id']) }}" method="post">
-        <input type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input class="form-control" name="description" id="description" autofocus autocomplete="off"
+                value="{{ request.form['description'] or transaction['description'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input class="form-control" name="amount" id="amount" type="number" step="0.01" 
+                value="{{ request.form['amount'] or transaction['amount'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input class="form-control" name="date" id="date" type="date" 
+                value="{{ request.form['date'] or transaction['date'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="account_id" class="form-label">Account</label>
+            <select class="form-control" name="account_id" required disabled>
+                <option selected value="{{ account['id'] }}">{{ account.name }}</option>
+            </select>
+        </div>
+        <div class="submit-group">
+            <button type="submit" class="btn btn-outline-success mb-3">Save</button>
+            {% if type == 'Income' %}
+                <a href="{{ url_for('transactions.main', type='incomes') }}" class="btn btn-outline-danger mb-3">Cancel</a>
+            {% elif type == 'Expense' %}
+                <a href="{{ url_for('transactions.main', type='expenses') }}" class="btn btn-outline-danger mb-3">Cancel</a>
+            {% endif %}
+        </div>
     </form>
 {% endblock %}

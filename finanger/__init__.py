@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 
+from finanger.dashboard import brl
+
 def create_app():
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -21,6 +23,9 @@ def create_app():
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
+
+    from .dashboard import brl
+    app.jinja_env.filters["brl"] = brl
 
     from . import db
     db.init_app(app)

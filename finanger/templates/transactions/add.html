@@ -1,23 +1,43 @@
 {% extends 'base.html' %}
 
+{% block title %}- New {{ type }}{% endblock %}
+
 {% block header %}
-    <h1>{% block title %}New {{ type }}{% endblock %}</h1>
+<header class="form-header">
+    <h3>New {{ type }}</h3>
+
+</header>
 {% endblock %}
 
 {% block content %}
     <form method="post">
-        <label for="description">Description</label>
-        <input name="description" id="description" required>
-        <label for="amount">Amount</label>
-        <input name="amount" id="amount" type="number" step="0.01" required>
-        <label for="date">Date</label>
-        <input name="date" id="date" type="date" required>
-        <label for="account_id">Account</label>
-        <select name="account_id" required>
-            {% for account in accounts %}
-                <option value="{{ account.id }}">{{account.name}}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Save">
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input class="form-control" name="description" id="description" autofocus autocomplete="off" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input class="form-control" name="amount" id="amount" type="number" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input class="form-control" name="date" id="date" type="date" required>
+        </div>
+        <div class="mb-3">
+            <label for="account_id" class="form-label">Account</label>
+            <select class="form-control" name="account_id" required>
+                {% for account in accounts %}
+                    <option value="{{ account.id }}">{{account.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="submit-group">
+            <button class="btn btn-outline-primary mb-3" type="submit">Add</button>
+            {% if type == 'Income' %}
+                <a href="{{ url_for('transactions.main', type='incomes') }}" class="btn btn-outline-danger mb-3">Cancel</a>
+            {% elif type == 'Expense' %}
+                <a href="{{ url_for('transactions.main', type='expenses') }}" class="btn btn-outline-danger mb-3">Cancel</a>
+            {% endif %}
+        </div>
     </form>
 {% endblock %}

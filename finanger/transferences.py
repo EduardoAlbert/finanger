@@ -104,9 +104,11 @@ def add():
             )
             db.commit()
 
+            flash("Transference added successfully!", "success")
+
             return redirect(url_for('transferences.main'))
 
-        flash(error)
+        flash(error, "danger")
 
     accounts = get_account(get_all=True)
 
@@ -124,4 +126,6 @@ def delete(id):
     )
     db.commit()
 
+    flash("Transference deleted successfully!", "success")
+    
     return redirect(url_for('transferences.main'))
