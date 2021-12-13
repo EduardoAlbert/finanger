@@ -110,6 +110,12 @@ def update(id):
 def delete(id):
     get_account(check_owner=True, id=id)
     db = get_db()
+    db.execute(
+        'DELETE FROM transactions '
+        'WHERE account_id_origin = ? '
+        'OR account_id_destination = ?', (id, id)
+    )
+    db.commit()
     db.execute('DELETE FROM account WHERE id = ?', (id,))
     db.commit()
     flash("Account deleted successfully!", "success")
