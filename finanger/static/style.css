@@ -1,6 +1,5 @@
 nav .navbar-brand
 {
-    /* size for brand */
     font-size: xx-large;
 }
 
@@ -11,9 +10,6 @@ nav .navbar-brand
     max-width: 760px; 
     display: flex;
     flex-direction: column;
-}
-
-.content { 
     padding: 0 1rem 1rem; 
 }
 
@@ -147,4 +143,22 @@ header a {
 .content #t-amount {
     font-size: large;
     margin-right: 50px;
+}
+
+.date-nav {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date-nav .a-left {
+    position: absolute;
+    margin-right: 145px;
+}
+
+.date-nav .a-right {
+    position: absolute;
+    margin-left: 145px;
 }

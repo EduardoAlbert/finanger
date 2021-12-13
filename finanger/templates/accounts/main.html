@@ -9,11 +9,11 @@
 </header>
 {% endblock %}
 
-
 {% block content %}
     <ul class="list-group">
         {% for account in accounts %}
-            <li class="list-group-item">{{ account.name }}<span class="span-right">{{ account.amount | brl }}</span>
+            <li class="list-group-item">
+                {{ account.name }}<span class="span-right">{{ account.amount | brl }}</span>
                 <a type="button" class="btn btn-outline-warning" href="{{ url_for('accounts.update', id=account['id']) }}">Edit</a>
             </li>
         {% endfor %}

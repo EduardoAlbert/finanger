@@ -2,10 +2,7 @@ import os
 
 from flask import Flask
 
-from finanger.dashboard import brl
-
 def create_app():
-    # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -14,18 +11,16 @@ def create_app():
 
     app.config.from_pyfile('config.py', silent=True)
 
-    # ensure the instace folder exists
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
+    
 
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
-    from .dashboard import brl
+    from .utils import brl, day_name_number, month_name
     app.jinja_env.filters["brl"] = brl
+    app.jinja_env.filters["day_name_number"] = day_name_number
+    app.jinja_env.filters["month_name"] = month_name
 
     from . import db
     db.init_app(app)
@@ -43,7 +38,7 @@ def create_app():
     from . import transactions
     app.register_blueprint(transactions.bp)
 
-    from . import transferences
-    app.register_blueprint(transferences.bp)
+    from . import transfers
+    app.register_blueprint(transfers.bp)
 
     return app

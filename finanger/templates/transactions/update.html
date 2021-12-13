@@ -37,9 +37,9 @@
         <div class="submit-group">
             <button type="submit" class="btn btn-outline-success mb-3">Save</button>
             {% if type == 'Income' %}
-                <a href="{{ url_for('transactions.main', type='incomes') }}" class="btn btn-outline-danger mb-3">Cancel</a>
+                <a href="{{ url_for('transactions.main', type='incomes', year=g.date['year'], month=g.date['month']) }}" class="btn btn-outline-danger mb-3">Cancel</a>
             {% elif type == 'Expense' %}
-                <a href="{{ url_for('transactions.main', type='expenses') }}" class="btn btn-outline-danger mb-3">Cancel</a>
+                <a href="{{ url_for('transactions.main', type='expenses', year=g.date['year'], month=g.date['month']) }}" class="btn btn-outline-danger mb-3">Cancel</a>
             {% endif %}
         </div>
     </form>

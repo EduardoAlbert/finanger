@@ -3,13 +3,13 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from finanger.auth import login_required
-from finanger.db import get_db
+from .auth import login_required
+from .db import get_db
 
 bp = Blueprint('accounts', __name__, url_prefix='/accounts')
 
 
-def get_account(get_all=False, id=None, check_owner=False):
+def get_account(get_all=False, check_owner=False, id=None):
 
     if get_all:
         accounts = get_db().execute(
@@ -45,7 +45,7 @@ def add():
     if request.method == 'POST':
         name = request.form['name']
         amount = request.form['amount']
-        db = get_db()
+        
         error = None
 
         if not name:
@@ -54,6 +54,7 @@ def add():
             error = 'Amount is required.'
 
         if error is None:
+            db = get_db()
             db.execute(
                 'INSERT INTO account (name, amount, user_id)'
                 'VALUES (?, ?, ?)', 
@@ -73,11 +74,12 @@ def add():
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    account = get_account(id=id, check_owner=True)
+    account = get_account(check_owner=True, id=id)
 
     if request.method == 'POST':
         name = request.form['name']
         amount = request.form['amount']
+
         error = None
 
         if not name:
@@ -106,7 +108,7 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_account(id=id, check_owner=True)
+    get_account(check_owner=True, id=id)
     db = get_db()
     db.execute('DELETE FROM account WHERE id = ?', (id,))
     db.commit()

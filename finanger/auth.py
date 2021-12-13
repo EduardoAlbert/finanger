@@ -3,10 +3,9 @@ import functools
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
-import flask
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from finanger.db import get_db
+from .db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -17,7 +16,6 @@ def register():
         password = request.form['password']
         password_confirm = request.form['password_confirm']
 
-        db = get_db()
         error = None
 
         if not username:
@@ -26,8 +24,11 @@ def register():
             error = 'Password is required.'
         elif password != password_confirm:
             error = "Passwords don't match."
+        elif len(password) < 8:
+            error = "Password must have at least 8 characters."
 
         if error is None:
+            db = get_db()
             try:
                 db.execute(
                     "INSERT INTO user (username, password) VALUES (?, ?)",
@@ -37,7 +38,6 @@ def register():
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
-
                 flash("Registered!", "success")
 
                 return redirect(url_for("auth.login"))

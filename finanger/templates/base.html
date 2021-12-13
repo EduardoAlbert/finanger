@@ -24,7 +24,10 @@
 
     <nav class="navbar navbar-expand-md navbar-light bg-light border">
 
-        <a class="navbar-brand" href="{{ url_for('index') }}"><span>$Finanger</span></a>
+        <a class="navbar-brand" href="{{ url_for('dashboard.index') }}">
+          <img src="{{ url_for('static', filename='cash-coin-black.svg') }}" alt="cash-coin-icon">
+          <span>Finanger</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,12 +35,12 @@
           {% if g.user %}
             <ul class="navbar-nav mr-auto mt-2">
               <li class="nav-item"><a class="nav-link" href="{{ url_for('accounts.main') }}">Accounts</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('transactions.main', type='incomes') }}">Incomes</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('transactions.main', type='expenses') }}">Expenses</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('transferences.main') }}">Transferences</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('transactions.main', type='incomes', month=g.date['month'], year=g.date['year']) }}">Incomes</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('transactions.main', type='expenses', month=g.date['month'], year=g.date['year']) }}">Expenses</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('transfers.main', month=g.date['month'], year=g.date['year']) }}">Transfers</a></li>
             </ul>
             <ul class="navbar-nav ml-auto mt-2">
-              <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">{{ g.user['username'] }}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard.index') }}">{{ g.user['username'] }}</a></li>
               <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a></li>
             </ul>
           {% else %}
@@ -47,7 +50,6 @@
             </ul>
           {% endif %}
         </div>
-
 
     </nav>
 

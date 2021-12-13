@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %}- {{ type }}{% endblock %}
+{% block title %}- {{ type_cap }}{% endblock %}
 
 {% block header %}
+<div class="date-nav">
+    <a class="btn a-left" href="{{ url_for('transactions.main', type=type, month=month-1, year=year) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16"><path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg></a>
+    {% if year == g.date['year'] %}
+        <span>{{ month | month_name }}</span>
+    {% else %}
+        <span>{{ month | month_name }}/{{ year }}</span>
+    {% endif %}
+    <a class="btn a-right" href="{{ url_for('transactions.main', type=type, month=month+1, year=year) }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16"><path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg></a>
+</div>
+
 <header class="table-header">
-    <h3>{{ type }}</h3>
-    {% if type == 'Incomes' %}
-        <a href="{{ url_for('transactions.add', type='incomes') }}" class="btn btn-outline-success">New income</a>
-    {% elif type == 'Expenses' %}
-        <a href="{{ url_for('transactions.add', type='expenses') }}" class="btn btn-outline-danger">New expense</a>
+    <h3>{{ type_cap }}</h3>
+    {% if type == 'incomes' %}
+        <a href="{{ url_for('transactions.add', type=type) }}" class="btn btn-outline-success">New income</a>
+    {% elif type == 'expenses' %}
+        <a href="{{ url_for('transactions.add', type=type) }}" class="btn btn-outline-danger">New expense</a>
     {% endif %}
 </header>
 {% endblock %}
@@ -20,7 +30,7 @@
             <th>Description</th>
             <th>Amount</th>
             <th>Account</th>
-            <th>Date</th>
+            <th>Day</th>
             <th>#</th>
         </tr>
     </thead>
@@ -29,8 +39,8 @@
             <tr>
                 <td>{{ transaction.description }}</td>
                 <td>{{ transaction.amount | brl }}</td>
-                <td>{{ transaction.account }}</td>
-                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.account_origin }}</td>
+                <td>{{ transaction.date | day_name_number }}</td>
                 <td><a href="{{ url_for('transactions.update', id=transaction['id']) }}" class="btn btn-outline-warning">Edit</a></td>
             </tr>
         {% endfor %}
