@@ -2,7 +2,7 @@
 #### Video Demo: https://youtu.be/7Ot5lYwOKVk
 #### Description: A web application made in flask that aims to help you keep track of your finances.
 
-## Aplication Setup
+## Application Setup
 A Flask application is an instance of the Flask class and is where the application's configurations are registered.
 
 In this project, instead of using a global instance of Flask, the so-called application factory is used, a function found in the *\_\_init\_\_.py* file, in which any configuration and other application settings are defined, such as the path to the database, the Jinja filters added and the registration of the blueprints (sets of related views).
