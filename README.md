@@ -1,4 +1,4 @@
-# Finanger
+# 💸 Finanger
 #### Video Demo: https://youtu.be/7Ot5lYwOKVk
 #### Description: A web application made in flask that aims to help you keep track of your finances.
 
