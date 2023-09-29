@@ -1,12 +1,17 @@
-<h1 align="center">💸 Finanger</h1>
+<h1 align="center">
+    <img src=".github/logo.png">
+</h1>
 
 ![License](https://img.shields.io/github/license/EduardoAlbert/finanger)
-![Stars](https://img.shields.io/github/stars/EduardoAlbert/spotify-music-app)
-![Forks](https://img.shields.io/github/forks/EduardoAlbert/spotify-music-app)
-![Issues](https://img.shields.io/github/issues/EduardoAlbert/spotify-music-app)
+![Stars](https://img.shields.io/github/stars/EduardoAlbert/finanger)
+![Forks](https://img.shields.io/github/forks/EduardoAlbert/finanger)
+![Issues](https://img.shields.io/github/issues/EduardoAlbert/finanger)
 
-#### Video Demo: https://youtu.be/7Ot5lYwOKVk
-#### Description: A web application made in flask that aims to help you keep track of your finances.
+[![Screenshot](.github/dashboard.png)](https://youtu.be/0eIWzRdFcVo)
+
+A web application made in flask that aims to help you keep track of your finances.
+
+Watch a demo video [here](https://youtu.be/0eIWzRdFcVo).
 
 ## Application Setup
 A Flask application is an instance of the Flask class and is where the application's configurations are registered.
@@ -77,3 +82,11 @@ On the transfers page, the user can view a table that displays the description, 
 Although they are stored in the same table where the incomes and expenses are, the transfers are programmed in a different place, in the *transfers.py* file, due to differences when adding and deleting. Inside are the views functions and related routes. The `do_transfer` function can be used to perform a transfer when it is added and to do the reverse process when it is deleted.
 
 In **templates**, in the **transfers** folder, the *main.html* file contains the formatting of the page itself and the transfer table. The *add.html* file contains the form to add a new transfer.
+
+## Contribution
+
+I would be delighted to receive your contributions to enhance the Finanger. Feel free to open issues or submit pull requests with improvements.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
