@@ -1,4 +1,10 @@
-# 💸 Finanger
+<h1 align="center">💸 Finanger</h1>
+
+![License](https://img.shields.io/github/license/EduardoAlbert/finanger)
+![Stars](https://img.shields.io/github/stars/EduardoAlbert/spotify-music-app)
+![Forks](https://img.shields.io/github/forks/EduardoAlbert/spotify-music-app)
+![Issues](https://img.shields.io/github/issues/EduardoAlbert/spotify-music-app)
+
 #### Video Demo: https://youtu.be/7Ot5lYwOKVk
 #### Description: A web application made in flask that aims to help you keep track of your finances.
 
